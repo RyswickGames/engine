@@ -1,0 +1,11 @@
+{
+  "name": "ryswick",
+  "version": "0.1.0",
+  "dependencies": [
+    "glm",
+    "spdlog",
+    "stb",
+    "assimp",
+    "imgui"
+  ]
+}
