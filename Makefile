@@ -31,9 +31,9 @@ run-release: build-release
 
 .PHONY: clean
 clean:
-	rmdir /S /Q $(BUILD_DIR)
+	$(CMAKE) -E rm -rf $(BUILD_DIR)
 
 .PHONY: reconfigure
 reconfigure:
-	rmdir /S /Q $(BUILD_DIR)
+	$(CMAKE) -E rm -rf $(BUILD_DIR)
 	$(MAKE) configure

@@ -2,11 +2,13 @@
 #include <d3dcompiler.h>
 #include <d3dx12/d3dx12.h>
 #include <iostream>
+#include <fmt/core.h>
+#include <fmt/color.h>
 
 // ---------------------------------------------------------------------------
 extern "C" {
-    __declspec(dllexport) extern const UINT D3D12SDKVersion = 613;
-    __declspec(dllexport) extern const char* D3D12SDKPath = ".\\";
+    __declspec(dllexport) extern const UINT  D3D12SDKVersion = 613;
+    __declspec(dllexport) extern const char* D3D12SDKPath    = ".\\";
 }
 // ---------------------------------------------------------------------------
 DX12Renderer::DX12Renderer() 
@@ -43,6 +45,7 @@ void DX12Renderer::Shutdown() {
 }
 // ---------------------------------------------------------------------------
 void DX12Renderer::CreateDevice() {
+    fmt::print(fg(fmt::color::yellow), "Creating D3D device...\n");
     D3D12CreateDevice(nullptr, D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&m_device));
 
     D3D12_COMMAND_QUEUE_DESC queueDesc = {};
@@ -117,6 +120,7 @@ void DX12Renderer::CreateRootSignature() {
 }
 // ---------------------------------------------------------------------------
 void DX12Renderer::CreatePipelineState() {
+    fmt::print(fg(fmt::color::yellow), "Compiling shaders...\n");
     ComPtr<ID3DBlob> vertexShader;
     ComPtr<ID3DBlob> pixelShader;
     ComPtr<ID3DBlob> error;
