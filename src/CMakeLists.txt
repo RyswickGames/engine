@@ -1,5 +1,6 @@
 add_executable(Ryswick
     main.cpp
+    engine/engine.cpp
     platform/windows/window_win32.cpp
     graphics/dx12/dx12_renderer.cpp
 )
@@ -13,4 +14,5 @@ target_link_libraries(Ryswick PRIVATE
     d3d12
     dxgi
     dxguid
+    d3dcompiler
 )
