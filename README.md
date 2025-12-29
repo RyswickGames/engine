@@ -6,6 +6,7 @@ Name is Ryswick until someone thinks of something cooler.
   - An example of this can be seen in this project's `.gitignore`.
   - Friction fosters creativity and growth. Too little friction and you're left with neither.
   - Also, whenever Microsoft decides to give me free tab-complete, I don't turn it off.
+- **Code-first** engine
 - No ceremonies.
 - Cross platform
   - This means a robust API-agnostic renderer interface must be implemented.
