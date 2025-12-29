@@ -22,7 +22,7 @@ Name is Ryswick until someone thinks of something cooler.
 - All tooling should be written and compiled for all platforms, within reason.
 - All code that is not overtly self-expplanatory is to be well-documented.
   - Boilerplate is not this.
-  - Unless you are reciting Carmack-level incantations, **do not comment line by line what code is doing**. Tell the reader *why* you wrote it, if deemed helpful.
+  - Unless you are reciting [FISR-level incantations](https://github.com/id-Software/Quake-III-Arena/blob/dbe4ddb10315479fc00086f08e25d968b4b43c49/code/game/q_math.c#L561), **do not comment line by line what code is doing**. Tell the reader *why* you wrote it, if deemed helpful.
 - All large decisions should be viewed as forks.
   - If making a decision and presented with more than one option, follow each until desired result is achieved.
     - After deciding which option to pick, but before starting work, create a new branch, such that we can return to the same state if this option doesn't pan out.
