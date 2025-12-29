@@ -29,3 +29,12 @@ Name is Ryswick until someone thinks of something cooler.
     - After deciding which option to pick, but before starting work, create a new branch, such that we can return to the same state if this option doesn't pan out.
 - Code should be written with the understanding that *there will be someone who comes after you*.
   - Plan it out. Write good software. Treat the person who comes next to a showcase of your work in a way that helps them move forward.
+
+# Very near future TODOs
+- Textures
+- 3D
+- Asset storage and loading system
+- Linter configuration to enforce standards
+- OpenGL
+- Save file support
+  - We're barely rendering triangles at the moment, but after realizing many modern save files take up 25mb~, I'm set on doing the opposite.
