@@ -52,6 +52,10 @@ Linux support will be locked arbitrarily to only support omarchy
 <img src="https://media.tenor.com/KL1ova4-26cAAAAm/kappa.webp" width="24" style="margin: 0px 0rem -0.5rem">
 
 # Very near future TODOs
+- Opengl base implementation (mirror dx12 triangle)
+  - Done.
+  - For the time being (week or so), I'm going to move forward with just ogl. No point in working on abstractions before knowing what I should abstract.
+    - Also DirectX boilerplate is nuts.
 - Textures
 - 3D
 - Asset storage and loading system
