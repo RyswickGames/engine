@@ -48,7 +48,8 @@ make run-debug
 ```
 
 ## Linux
-Linux support will be locked arbitrarily to only support omarchy ![Kappa](https://media.tenor.com/KL1ova4-26cAAAAm/kappa.webp)
+Linux support will be locked arbitrarily to only support omarchy 
+<img src="https://media.tenor.com/KL1ova4-26cAAAAm/kappa.webp" width="24" style="margin: 0px 0rem -0.5rem">
 
 # Very near future TODOs
 - Textures
