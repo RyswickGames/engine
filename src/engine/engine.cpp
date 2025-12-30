@@ -1,7 +1,9 @@
 #include "engine.h"
-#ifndef __APPLE__
+#ifndef __APPLE__ //
     #include "../platform/windows/window_win32.h"
     #include "../graphics/dx12/dx12_renderer.h"
+    // (carter): haven't bothered to add opengl to macos cmake config yet
+    #include "../graphics/opengl/opengl_renderer.h"
 #else
     #include "../platform/macos/window_macos.h"
 #endif
@@ -18,7 +20,12 @@ void Engine::Initialize() {
     WindowProps props = { 1920, 1080, "Ryswick" };
 #ifndef __APPLE__
     m_window   = MakeUnique<WindowWin32>(props);
-    m_renderer = MakeUnique<DX12Renderer>();
+    const API api = API::OPENGL;
+    if (api == API::DX12) {
+        m_renderer = MakeUnique<DX12Renderer>();
+    } else if (api == API::OPENGL) {
+        m_renderer = MakeUnique<OpenGLRenderer>();
+    }
 #else
     m_window   = MakeUnique<WindowMacOS>(props);
 #endif

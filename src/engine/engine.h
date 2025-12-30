@@ -2,13 +2,7 @@
 #include <memory>
 #include "../platform/window.h"
 #include "../graphics/renderer.h"
-
-template <typename T>
-using UniquePtr = std::unique_ptr<T>;
-template <typename T, typename... Args>
-UniquePtr<T> MakeUnique(Args&&... args) {
-    return std::make_unique<T>(std::forward<Args>(args)...);
-}
+#include "core/common/alias.h"
 
 // (carter): Dates of each version change
 //

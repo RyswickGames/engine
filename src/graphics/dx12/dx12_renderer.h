@@ -4,6 +4,11 @@
 #include <dxgi1_6.h>
 #include <wrl/client.h>
 #include <vector>
+#include <memory>
+#include <DirectXTK12/GraphicsMemory.h>
+#include "CommonStates.h"
+#include "DescriptorHeap.h"
+#include "ResourceUploadBatch.h"
 
 using Microsoft::WRL::ComPtr;
 
@@ -25,7 +30,7 @@ private:
     void CreateSyncObjects();
     void CreateRootSignature();
     void CreatePipelineState();
-    
+
     void FenceSitter();
 
     static const uint32_t FrameCount = 2;
@@ -33,11 +38,10 @@ private:
     ComPtr<ID3D12Device> m_device;
     ComPtr<ID3D12CommandQueue> m_commandQueue;
     ComPtr<IDXGISwapChain3> m_swapChain;
-    ComPtr<ID3D12DescriptorHeap> m_rtvHeap;
     ComPtr<ID3D12Resource> m_renderTargets[FrameCount];
     ComPtr<ID3D12CommandAllocator> m_commandAllocator;
     ComPtr<ID3D12GraphicsCommandList> m_commandList;
-    
+
     ComPtr<ID3D12RootSignature> m_rootSignature;
     ComPtr<ID3D12PipelineState> m_pipelineState;
 
@@ -45,9 +49,12 @@ private:
     UINT64 m_fenceValue;
     HANDLE m_fenceEvent;
 
-    uint32_t m_rtvDescriptorSize;
+    std::unique_ptr<DirectX::GraphicsMemory> m_graphicsMemory;
+    std::unique_ptr<DirectX::CommonStates> m_commonStates;
+    std::unique_ptr<DirectX::DescriptorHeap> m_rtvHeap;
+
     uint32_t m_frameIndex;
-    
+
     uint32_t m_width;
     uint32_t m_height;
 };

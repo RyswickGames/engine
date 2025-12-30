@@ -39,16 +39,20 @@ if(WIN32)
     target_sources(Ryswick PRIVATE
         platform/windows/window_win32.cpp
         graphics/dx12/dx12_renderer.cpp
+        graphics/opengl/opengl_renderer.cpp
     )
 
     target_include_directories(Ryswick PRIVATE
         ${PROJECT_SOURCE_DIR}/external/dx12-agility/include
     )
+    find_package(directxtk12 CONFIG REQUIRED)
 
     target_link_libraries(Ryswick PRIVATE
         d3d12
         dxgi
         dxguid
         d3dcompiler
+        Microsoft::DirectXTK12
+        opengl32
     )
 endif()

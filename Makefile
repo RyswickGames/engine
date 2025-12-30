@@ -62,3 +62,25 @@ endif
 else
 	$(CMAKE) --build $(BUILD_DIR) --config Release
 endif
+
+run-debug: build-debug
+ifeq ($(UNAME_S),Darwin)
+ifeq ($(GENERATOR),Xcode)
+	$(BUILD_DIR)/bin/Debug/$(PROJECT_NAME)
+else
+	$(BUILD_DIR)/bin/Debug/$(PROJECT_NAME)
+endif
+else
+	$(BUILD_DIR)/bin/Debug/$(PROJECT_NAME).exe
+endif
+
+run-release: build-release
+ifeq ($(UNAME_S),Darwin)
+ifeq ($(GENERATOR),Xcode)
+	$(BUILD_DIR)/bin/Release/$(PROJECT_NAME)
+else
+	$(BUILD_DIR)/bin/Release/$(PROJECT_NAME)
+endif
+else
+	$(BUILD_DIR)/bin/Release/$(PROJECT_NAME).exe
+endif
