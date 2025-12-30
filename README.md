@@ -31,6 +31,25 @@ Name is Ryswick until someone thinks of something cooler.
 - Code should be written with the understanding that *there will be someone who comes after you*.
   - Plan it out. Write good software. Treat the person who comes next to a showcase of your work in a way that helps them move forward.
 
+# Building
+## macOS
+If on macOS, symlink `compile_commands.json` from `build/ninja` to project root.
+
+`ln -sf build/ninja/compile_commands.json compile_commands.json`
+
+- Build configuration supports both Ninja and Xcode generators.
+- I have no idea what I'm doing with macOS. If you know how to do things better, please god help me.
+
+## Windows
+Will need to change `C:/Users/dev/vcpkg` to your vcpkg root in `Makefile`.
+```
+make configure
+make run-debug
+```
+
+## Linux
+Linux support will be locked arbitrarily to only support omarchy ![Kappa](https://media.tenor.com/KL1ova4-26cAAAAm/kappa.webp)
+
 # Very near future TODOs
 - Textures
 - 3D

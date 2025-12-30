@@ -1,39 +1,64 @@
 PROJECT_NAME := Ryswick
-BUILD_DIR    := build/vs
 CMAKE        := cmake
-VCPKG_ROOT := C:/Users/dev/vcpkg
-VCPKG_TOOLCHAIN := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
-VCPKG_TOOLCHAIN := $(subst \,/,$(VCPKG_TOOLCHAIN))
-GENERATOR := "Visual Studio 17 2022"
+UNAME_S := $(shell uname -s)
+GENERATOR    ?=
+BUILD_TYPE   ?= Debug
 
-.PHONY: all
+ifeq ($(UNAME_S),Darwin)
+    ifeq ($(GENERATOR),)
+        GENERATOR := Ninja
+    endif
+    ifeq ($(GENERATOR),Xcode)
+        BUILD_DIR := build/xcode
+    else
+        BUILD_DIR := build/ninja
+    endif
+    VCPKG_ROOT := $(HOME)/vcpkg
+else
+    GENERATOR   := Visual Studio 17 2022
+    BUILD_DIR   := build/vs
+    VCPKG_ROOT  := C:/Users/dev/vcpkg
+endif
+VCPKG_TOOLCHAIN := $(VCPKG_ROOT)/scripts/buildsystems/vcpkg.cmake
+
+.PHONY: all configure build-debug build-release clean reconfigure
+
 all: build-debug
 
-.PHONY: configure
 configure:
+ifeq ($(UNAME_S),Darwin)
 	$(CMAKE) -S . -B $(BUILD_DIR) \
-		-G $(GENERATOR) \
-		-DCMAKE_TOOLCHAIN_FILE=C:/Users/dev/vcpkg/scripts/buildsystems/vcpkg.cmake
+		-G "$(GENERATOR)" \
+		-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_TOOLCHAIN) \
+		$(if $(filter Ninja,$(GENERATOR)),-DCMAKE_BUILD_TYPE=$(BUILD_TYPE),)
+else
+	$(CMAKE) -S . -B $(BUILD_DIR) \
+		-G "$(GENERATOR)" \
+		-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_TOOLCHAIN)
+endif
 
-.PHONY: build-debug
 build-debug: configure
+ifeq ($(UNAME_S),Darwin)
+ifeq ($(GENERATOR),Xcode)
 	$(CMAKE) --build $(BUILD_DIR) --config Debug
+else
+	$(CMAKE) --build $(BUILD_DIR)
+endif
+else
+	$(CMAKE) --build $(BUILD_DIR) --config Debug
+endif
 
-.PHONY: build-release
-build-release: configure
+build-release:
+ifeq ($(UNAME_S),Darwin)
+ifeq ($(GENERATOR),Xcode)
 	$(CMAKE) --build $(BUILD_DIR) --config Release
-
-run-debug: build-debug
-	$(BUILD_DIR)/bin/Debug/$(PROJECT_NAME).exe
-
-run-release: build-release
-	$(BUILD_DIR)/bin/Release/$(PROJECT_NAME).exe
-
-.PHONY: clean
-clean:
-	$(CMAKE) -E rm -rf $(BUILD_DIR)
-
-.PHONY: reconfigure
-reconfigure:
-	$(CMAKE) -E rm -rf $(BUILD_DIR)
-	$(MAKE) configure
+else
+	$(CMAKE) -S . -B $(BUILD_DIR) \
+		-G "$(GENERATOR)" \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_TOOLCHAIN_FILE=$(VCPKG_TOOLCHAIN)
+	$(CMAKE) --build $(BUILD_DIR)
+endif
+else
+	$(CMAKE) --build $(BUILD_DIR) --config Release
+endif

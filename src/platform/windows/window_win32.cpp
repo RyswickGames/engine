@@ -1,3 +1,4 @@
+#ifndef __APPLE__
 #include "window_win32.h"
 
 WindowWin32::WindowWin32(const WindowProps& props) : m_props(props), m_shouldClose(false) {
@@ -61,3 +62,4 @@ LRESULT WindowWin32::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpara
 
     return DefWindowProcA(hwnd, msg, wparam, lparam);
 }
+#endif

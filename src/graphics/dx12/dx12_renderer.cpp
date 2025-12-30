@@ -1,3 +1,4 @@
+#ifndef __APPLE__
 #include "dx12_renderer.h"
 #include <d3dcompiler.h>
 #include <d3dx12/d3dx12.h>
@@ -11,7 +12,7 @@ extern "C" {
     __declspec(dllexport) extern const char* D3D12SDKPath    = ".\\";
 }
 // ---------------------------------------------------------------------------
-DX12Renderer::DX12Renderer() 
+DX12Renderer::DX12Renderer()
     : m_frameIndex(0)
     , m_rtvDescriptorSize(0)
     , m_fenceValue(0)
@@ -133,7 +134,7 @@ void DX12Renderer::CreatePipelineState() {
     psoDesc.pRootSignature = m_rootSignature.Get();
     psoDesc.VS = CD3DX12_SHADER_BYTECODE(vertexShader.Get());
     psoDesc.PS = CD3DX12_SHADER_BYTECODE(pixelShader.Get());
-    
+
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     psoDesc.BlendState = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
     psoDesc.DepthStencilState.DepthEnable = FALSE;
@@ -224,3 +225,4 @@ void DX12Renderer::FenceSitter() {
     }
 }
 // ---------------------------------------------------------------------------
+#endif

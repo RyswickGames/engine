@@ -3,6 +3,13 @@
 #include "../platform/window.h"
 #include "../graphics/renderer.h"
 
+template <typename T>
+using UniquePtr = std::unique_ptr<T>;
+template <typename T, typename... Args>
+UniquePtr<T> MakeUnique(Args&&... args) {
+    return std::make_unique<T>(std::forward<Args>(args)...);
+}
+
 // (carter): Dates of each version change
 //
 // 12/28/25 0.1.0
@@ -21,7 +28,8 @@ private:
     void Initialize();
     void Shutdown();
 
-    std::unique_ptr<Window> m_window;
-    std::unique_ptr<Renderer> m_renderer;
+    UniquePtr<Window> m_window;
+    UniquePtr<Renderer> m_renderer;
+
     bool m_isRunning;
 };

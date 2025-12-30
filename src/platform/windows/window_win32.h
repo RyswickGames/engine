@@ -1,4 +1,7 @@
 #pragma once
+
+#ifndef __APPLE__
+
 #include <windows.h>
 #include <cstdint>
 #include "../window.h"
@@ -19,3 +22,5 @@ private:
     WindowProps m_props;
     bool m_shouldClose;
 };
+
+#endif
