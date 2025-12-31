@@ -1,6 +1,7 @@
 add_executable(Ryswick
     main.cpp
     engine/engine.cpp
+    core/filesystem/filesystem.cpp
 )
 
 target_include_directories(Ryswick PRIVATE
@@ -15,10 +16,13 @@ if(APPLE)
 
     target_sources(Ryswick PRIVATE
         platform/macos/window_macos.mm
+        graphics/opengl/opengl_context_macos.mm
+        graphics/opengl/opengl_renderer.cpp
     )
 
     set_source_files_properties(
         platform/macos/window_macos.mm
+        graphics/opengl/opengl_context_macos.mm
         PROPERTIES LANGUAGE OBJCXX
     )
 
@@ -32,6 +36,7 @@ if(APPLE)
         "-framework Metal"
         "-framework MetalKit"
         "-framework Foundation"
+        "-framework OpenGL"
     )
 endif()
 

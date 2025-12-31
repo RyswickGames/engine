@@ -1,12 +1,20 @@
-#ifndef __APPLE__
 #include "opengl_renderer.h"
+#include <fmt/core.h>
+#include <stdio.h>
+#include "../../core/filesystem/filesystem.h"
 
+#ifndef __APPLE__
 OpenGLRenderer::OpenGLRenderer()
     : m_hdc(nullptr)
     , m_glrc(nullptr)
     , m_hwnd(nullptr)
     , m_width(0)
     , m_height(0) {}
+#else
+OpenGLRenderer::OpenGLRenderer() {
+
+}
+#endif
 // ---------------------------------------------------------------------------
 OpenGLRenderer::~OpenGLRenderer() {
     Shutdown();
@@ -15,14 +23,25 @@ OpenGLRenderer::~OpenGLRenderer() {
 void OpenGLRenderer::Initialize(void* windowHandle, uint32_t width, uint32_t height) {
     m_width = width;
     m_height = height;
+#ifndef __APPLE__
     m_hwnd = (HWND)windowHandle;
     CreateContext(m_hwnd);
+#else
+    CreateContext(m_context);
+    // temp
+    auto vsSource = rfs::GetFileContentsAsStr("/Users/NONONONONONONONO/personal/engine/src/shaders/vertex_shader.glsl");
+    auto fsSource = rfs::GetFileContentsAsStr("/Users/NONONONONONONONO/personal/engine/src/shaders/fragment_shader.glsl");
+    printf("%s\n", vsSource.c_str());
+    printf("=========================\n");
+    printf("%s\n", fsSource.c_str());
+    #endif
 }
 // ---------------------------------------------------------------------------
 void OpenGLRenderer::Shutdown() {
     DestroyContext();
 }
 // ---------------------------------------------------------------------------
+#ifndef __APPLE__
 void OpenGLRenderer::CreateContext(HWND hwnd) {
     m_hdc = GetDC(hwnd);
 
@@ -82,5 +101,19 @@ void OpenGLRenderer::Resize(uint32_t width, uint32_t height) {
     m_height = height;
     glViewport(0, 0, (GLsizei)(m_width), (GLsizei)(m_height));
 }
+// ---------------------------------------------------------------------------
+#else
+void OpenGLRenderer::BeginFrame() {
+    glViewport(0, 0, m_width, m_height);
+    glClearColor(0.0f, 0.2f, 0.4f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glUseProgram(m_shader);
+    // glBindVertexArray(m_vao);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+void OpenGLRenderer::DestroyContext() {}
+void OpenGLRenderer::EndFrame() {}
+void OpenGLRenderer::Resize(uint32_t width, uint32_t height) {}
 // ---------------------------------------------------------------------------
 #endif

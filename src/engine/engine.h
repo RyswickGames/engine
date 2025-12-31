@@ -2,7 +2,7 @@
 #include <memory>
 #include "../platform/window.h"
 #include "../graphics/renderer.h"
-#include "core/common/alias.h"
+#include "../core/common/alias.h"
 
 // (carter): Dates of each version change
 //

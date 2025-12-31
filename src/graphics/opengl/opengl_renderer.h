@@ -4,6 +4,9 @@
 #ifndef __APPLE__
 #include <windows.h>
 #include <gl/GL.h>
+#else
+#include <OpenGL/gl3.h>
+#endif
 
 class OpenGLRenderer : public Renderer {
 public:
@@ -17,13 +20,20 @@ public:
     void Resize(uint32_t width, uint32_t height) override;
 
 private:
-    void CreateContext(HWND hwnd);
+    void CreateContext(void* viewPtr);
     void DestroyContext();
 
-    HDC m_hdc;
+#ifndef __APPLE__
+    void CreateContext(HWND hwnd);
+
+    HDC   m_hdc;
     HGLRC m_glrc;
-    HWND m_hwnd;
+    HWND  m_hwnd;
+#else
+    /* NSOpenGLContext* */void* m_context = nullptr;
+    // temp
+    GLuint m_shader;
+#endif
     uint32_t m_width;
     uint32_t m_height;
 };
-#endif
